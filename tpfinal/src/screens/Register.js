@@ -24,17 +24,23 @@ class Register extends Component{
 
     onSubmit = (usuario, email, password) => {
 
+    
+
+    if (!usuario || !email || !password) {
+        this.setState({error:'Por favor, complete todos los campos.'});
+        return
+    }
+
+    if(password.lenght < 6){
+        this.setState({error : " La contraseña debe tener por lo menos 6 caracteres."})
+        return
+    }
 
 
-
-        if (!usuario || !email || !password) {
-            alert('Por favor, complete todos los campos.');
-            return
-          }
-          
-
-
-
+    if(!email.includes("@")) {
+        this.setState({error : "El email no tiene un formato válido."})
+      return
+    }
 
 
 
@@ -42,11 +48,6 @@ class Register extends Component{
       .then(response => {
         this.setState({registred: true})
         this.props.navigation.navigate('Login');
-
-
-
-
-
 
 
 
@@ -59,29 +60,13 @@ class Register extends Component{
         .catch(e => console.log(e));
 
 
-
-
-
-
-
-
       })
       .catch(error => {this.setState({error: "Fallo en el registro"})})
-
-
-
-
-
-
 
 
         console.log(this.state.email)
         console.log(this.state.usuario)
         console.log(this.state.password)
-
-
-
-
       };
 
 
@@ -91,7 +76,6 @@ class Register extends Component{
 
 
 
-    BotonRegistrar
    
     render(){
         return(
@@ -145,6 +129,11 @@ class Register extends Component{
                 </TouchableOpacity>
 
 
+                {this.state.error ? <Text>{this.state.error}</Text>: null}
+
+                
+
+
 
 
             </View>
@@ -163,6 +152,7 @@ const style = StyleSheet.create({
       padding: 20,  
       backgroundColor: "#f5f5f5",  
     },
+
     campo: {
       height: 40,  
       width: "100%",

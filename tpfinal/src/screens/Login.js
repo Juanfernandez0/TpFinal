@@ -58,13 +58,6 @@ class Login extends Component{
       };
 
 
-
-
-
-
-
-
-    BotonRegistrar
    
     render(){
         return(
@@ -106,6 +99,9 @@ class Login extends Component{
 
                 </TouchableOpacity>
 
+
+
+                {this.state.error ? <Text>{this.state.error}</Text>: null}
 
 
 
