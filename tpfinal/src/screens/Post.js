@@ -1,5 +1,5 @@
 import react, { Component } from "react";
-import { TouchableOpacity, View, Text, StyleSheet, FlatList, TextInput } from "react-native";
+import { TouchableOpacity, View, Text, StyleSheet, TextInput } from "react-native";
 import { db, auth } from '../firebase/config';
 
 
@@ -14,20 +14,24 @@ class Post extends Component {
         };
     }
 
-    posteos(email, texto) {
+    Posteo(email, texto) {
         db.collection('posts').add({
             email: email,
             texto: texto,
             likes: [],
             createdAt: Date.now(),
-        }).then()
-            .catch(e => console.log(e))
+        })
+        .then(() => {
+            console.log('Post successfully created!');
+        })
+        .catch(e => console.log(e));
     }
 
 
+    render() { 
+    
+        return (               
 
-    render() {
-        return (
             <View style={styles.form}>
                 <Text>Nuevo Posteo</Text>
                 <TextInput style={styles.field}
@@ -35,8 +39,8 @@ class Post extends Component {
                     placeholder='Escribi lo que estas pensando'
                     onChangeText={text => this.setState({ texto: text })}
                     value={this.state.texto} />
-                <TouchableOpacity onPress={() => this.posteos(auth.currentUser.email, this.state.texto)} style={styles.boton}>
-                    <Text style={styles.botonT}>POSTEAR</Text>
+                <TouchableOpacity onPress={() => this.Posteo(auth.currentUser.email, this.state.texto)} style={styles.Boton}>
+                    <Text style={styles.BotonDePosteo}>POSTEAR</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -44,4 +48,37 @@ class Post extends Component {
 
 }
 
+const styles = StyleSheet.create({
+    form: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+      backgroundColor: '#f9f9f9',
+    },
+    field: {
+      width: '100%',
+      height: 40,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: 20,
+      paddingLeft: 10,
+      fontSize: 16,
+    },
+    Boton: {
+      backgroundColor: '#007BFF', // Azul
+      paddingVertical: 10,
+      paddingHorizontal: 30,
+      borderRadius: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    BotonDePosteo: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+  });
+  
 export default Post

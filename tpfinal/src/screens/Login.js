@@ -39,7 +39,7 @@ class Login extends Component{
      auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         this.setState({loggedIn: true})
-        this.props.navigation.navigate('MenuHome')
+        this.props.navigation.navigate('HomeMenu')
       })
       .catch(error => {
         this.setState({error: "Error al cargar credenciales"})

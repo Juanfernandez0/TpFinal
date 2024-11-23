@@ -42,11 +42,7 @@ componentDidMount(){
         return(
             <View>
                 <Text>Home</Text>
-                <Text>
-                    Info importante
-                </Text>
-                <HomeMenu/>
-                
+                    <HomeMenu/>                
             </View>
 
 
