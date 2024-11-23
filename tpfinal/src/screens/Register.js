@@ -1,6 +1,6 @@
 import react, {Component} from "react";
 import { TouchableOpacity, View, Text, TextInput, StyleSheet  } from "react-native";
-import { db, auth } from "../firebase/config.js"
+import { db, auth } from "../firebase/config"
 
 
 
@@ -31,6 +31,7 @@ class Register extends Component{
             alert('Por favor, complete todos los campos.');
             return
           }
+          
 
 
 
@@ -95,9 +96,7 @@ class Register extends Component{
     render(){
         return(
             <View style={StyleSheet.container}>
-                <Text>
-                    Registro
-                </Text>
+              
 
 
 
@@ -132,8 +131,17 @@ class Register extends Component{
                 <TouchableOpacity style={style.boton} onPress={() =>
                     this.onSubmit(this.state.usuario, this.state.email, this.state.password,)}>
                     <Text>
-                        Registrar
+                        Registrarse
                     </Text>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity 
+                onPress={() => this.props.navigation.navigate("Login")} >
+                
+                <Text>Ya estas logueado? Inicia Sesion</Text>
+
+
                 </TouchableOpacity>
 
 
@@ -171,6 +179,7 @@ const style = StyleSheet.create({
       paddingHorizontal: 20,
       borderRadius: 5,  
       marginTop: 20,
+      marginBottom: 20,
     },
     botonTexto: {
       color: "#fff",  
