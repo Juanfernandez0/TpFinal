@@ -25,7 +25,7 @@ export default class Post extends Component {
     db.collection("posts").doc(this.props.item.id).update({
       likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
     })
-      .then(() => this.setState((prevState) => ({
+      .then(() => this.setState(() => ({
         like: true,
         cantidad: this.props.item.data.likes.length
       })))
@@ -36,7 +36,7 @@ export default class Post extends Component {
     db.collection("posts").doc(this.props.item.id).update({
       likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
     })
-      .then(() => this.setState((prevState) => ({
+      .then(() => this.setState(() => ({
         like: false,
         cantidad: this.props.item.data.likes.length
       })))
