@@ -128,6 +128,7 @@ const style = StyleSheet.create({
       backgroundColor: "#f5f5f5",  
     },
     campo: {
+      marginBottom:20,  
       height: 40,  
       width: "100%",
       borderColor: "#ccc",  

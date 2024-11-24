@@ -3,6 +3,7 @@ import react, { Component } from "react";
 import { TouchableOpacity, View, Text, TextInput, StyleSheet, FlatList } from "react-native";
 import { db, auth } from "../firebase/config"
 import HomeMenu from "../components/HomeMenu";
+import Post from "../components/Post"
 
 
 class MenuHome extends Component {
@@ -43,8 +44,7 @@ class MenuHome extends Component {
                 {!this.state.loading && (<FlatList 
                 data={this.state.posts} 
                 keyExtractor={(post) => post.id} 
-                renderItem={({ item }) => <View><Text>{item.data.texto} </Text>
-                <Text>{item.data.email}</Text></View>} />)}
+                renderItem={({ item }) => <Post item={item}/>} />)}
 
             </View>
 
