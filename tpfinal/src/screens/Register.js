@@ -67,7 +67,9 @@ class Register extends Component{
 
 
       })
-      .catch(error => {this.setState({error: "Fallo en el registro"})})
+      .catch(error => {
+        this.setState({ error: "Fallo en el registro: " + error.message });
+      })
 
 
         console.log(this.state.email)
@@ -84,6 +86,9 @@ class Register extends Component{
 
    
     render(){
+
+      const isDisabled = !this.state.usuario || !this.state.email || !this.state.password;
+
         return(
             <View style={StyleSheet.container}>
               
@@ -118,12 +123,14 @@ class Register extends Component{
 
 
 
-                <TouchableOpacity style={style.boton} onPress={() =>
-                    this.onSubmit(this.state.usuario, this.state.email, this.state.password,)}>
-                    <Text>
-                        Registrarse
-                    </Text>
-                </TouchableOpacity>
+            <TouchableOpacity
+                style={[style.boton, isDisabled && style.botonDeshabilitado]} 
+                onPress={() => this.onSubmit(this.state.usuario, this.state.email, this.state.password)}
+                disabled={isDisabled} 
+            >
+                <Text style={style.botonTexto}>Registrarse</Text>
+            </TouchableOpacity>
+
 
 
                 <TouchableOpacity 
@@ -159,6 +166,9 @@ const style = StyleSheet.create({
       backgroundColor: "#f5f5f5",  
     },
 
+    botonDeshabilitado: {
+      backgroundColor: "skyblue", 
+  },
     campo: {
       height: 40,  
       width: "100%",
