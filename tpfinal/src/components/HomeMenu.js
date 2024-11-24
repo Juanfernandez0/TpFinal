@@ -3,13 +3,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Profile from "../screens/Profile";
 import Post from "../screens/Post";
-
+import Users from "../screens/Users";
 function HomeMenu(){
     const Tab = createBottomTabNavigator();
     return(
             <Tab.Navigator>       
-                <Tab.Screen name="Profile" component={Profile}/>
-                <Tab.Screen name="Post" component={Post}/>
+                <Tab.Screen name="Mi Perfil" component={Profile}/>
+                <Tab.Screen name="Nuevo Post" component={Post}/>
+                <Tab.Screen name="Lista De Usuarios" component={Users}/>
+
             </Tab.Navigator>
     )
 }
