@@ -72,9 +72,7 @@ class Register extends Component{
       })
 
 
-        console.log(this.state.email)
-        console.log(this.state.usuario)
-        console.log(this.state.password)
+        
       };
 
 

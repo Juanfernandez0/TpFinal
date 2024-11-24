@@ -9,28 +9,25 @@ class Post extends Component {
         this.state = {
             email: '',
             texto: '',
-            usuario: ''
 
 
         };
     }
 
-    Posteo(email,usuario, texto) {
+    Posteo(email, texto) {
         db.collection('posts').add({
             email: email,
-            usuario: usuario,
             texto: texto,
             likes: [],
             createdAt: Date.now(),
         })
-        .then(() => {
-            this.props.navigation.navigate('HomeMenu')
-            console.log('Post successfully created!');
-        })
-        .catch(e => console.log(e));
+            .then(() => {
+                this.props.navigation.navigate('HomeMenu')
+            })
+            .catch(e => console.log(e));
     }
 
-    deletePost= (id) => {
+    deletePost = (id) => {
         db.collection("posts")
             .doc(id)
             .delete()
@@ -42,10 +39,10 @@ class Post extends Component {
             });
     };
 
-    render() { console.log(auth.currentUser);
-    
-    
-        return (               
+    render() {
+
+
+        return (
 
             <View style={styles.form}>
                 <Text style={styles.title}>Nuevo Posteo</Text>
@@ -54,7 +51,7 @@ class Post extends Component {
                     placeholder='Escribi lo que estas pensando...'
                     onChangeText={text => this.setState({ texto: text })}
                     value={this.state.texto} />
-                <TouchableOpacity onPress={() => this.Posteo(auth.currentUser.email, auth.currentUser.usuario, this.state.texto)} style={styles.Boton}>
+                <TouchableOpacity onPress={() => this.Posteo(auth.currentUser.email, this.state.texto)} style={styles.Boton}>
                     <Text style={styles.BotonDePosteo}>POSTEAR</Text>
 
                 </TouchableOpacity>
@@ -67,40 +64,40 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
     form: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
-      backgroundColor: '#f9f9f9',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#f9f9f9',
     },
-    title:{
+    title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom:30
+        marginBottom: 30
     },
     field: {
-      width: '100%',
-      height: 40,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 5,
-      marginBottom: 20,
-      paddingLeft: 10,
-      fontSize: 16,
+        width: '100%',
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: 20,
+        paddingLeft: 10,
+        fontSize: 16,
     },
     Boton: {
-      backgroundColor: '#007BFF', // Azul
-      paddingVertical: 10,
-      paddingHorizontal: 30,
-      borderRadius: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
+        backgroundColor: '#007BFF', // Azul
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     BotonDePosteo: {
-      color: '#fff',
-      fontSize: 18,
-      fontWeight: 'bold',
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
-  });
-  
+});
+
 export default Post

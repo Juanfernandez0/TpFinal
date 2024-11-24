@@ -25,7 +25,6 @@ class MenuHome extends Component {
                         data: doc.data()
                     })
                 })
-                console.log(posts)
                 this.setState({
                     posts: posts,
                     loading: false
@@ -37,32 +36,46 @@ class MenuHome extends Component {
 
 
     render() {
-        console.log(this.state.posts)
         return (
-            <View>
-                <Text>Home</Text>
-                {!this.state.loading && (<FlatList 
-                data={this.state.posts} 
-                keyExtractor={(post) => post.id} 
-                renderItem={({ item }) => <Post item={item}/>} />)}
-
+            <View style={styles.container}>
+                <Text style={styles.header}>Home</Text>
+                {!this.state.loading && (
+                    <FlatList
+                        data={this.state.posts}
+                        keyExtractor={(post) => post.id}
+                        renderItem={({ item }) => <Post item={item} />}
+                        style={styles.list} 
+                        contentContainerStyle={styles.listContent} 
+                    />
+                )}
             </View>
-
-
-
-
-
-
-
-        )
+        );
     }
 }
 
 
-
-
-
-
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1, 
+        backgroundColor: "#f5f5f5", 
+        paddingHorizontal: 10,
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginVertical: 10,
+    },
+    list: {
+        flex: 1, 
+    },
+    listContent: {
+        paddingBottom: 20, 
+    },
+});
 
 export default MenuHome;
+
+
+
+

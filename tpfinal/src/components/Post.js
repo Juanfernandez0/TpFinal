@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons';
 
 export default class Post extends Component {
   constructor(props) {
@@ -49,13 +50,14 @@ export default class Post extends Component {
         <Text style={styles.email}>{this.props.item.data.email}</Text>
 
         {this.state.like ? (
-          <TouchableOpacity style={styles.botonDislike} onPress={this.handleUnLike}>
-            <Text style={styles.botonTexto}>Dislike</Text>
+          <TouchableOpacity style={styles} onPress={this.handleUnLike}>
+                         <AntDesign name="heart" size={20} color="red" />
+
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.botonLike} onPress={this.handleLike}>
-            <Text style={styles.botonTexto}>Like</Text>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles} onPress={this.handleLike}>
+              <AntDesign name="hearto" size={20} color="black" />
+              </TouchableOpacity>
         )}
 
         <Text style={styles.likes}>{this.state.cantidad} likes</Text>
@@ -84,20 +86,8 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 16,
   },
-  botonLike: {
-    backgroundColor: '#28a745',
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  botonDislike: {
-    backgroundColor: '#dc3545',
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
+
+  
   botonTexto: {
     color: '#fff',
     fontWeight: 'bold',

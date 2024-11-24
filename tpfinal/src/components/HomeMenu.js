@@ -6,6 +6,7 @@ import Post from "../screens/Post";
 import MenuHome from "../screens/MenuHome";
 import Users from "../screens/Users"
 import { auth } from "../firebase/config";
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,14 +26,39 @@ constructor(props) {
     render() {
     
         return(
-            <Tab.Navigator>   
-                <Tab.Screen name="Home" component={MenuHome}/>    
-                <Tab.Screen name="Profile" component={Profile}/>
-                <Tab.Screen name="Post" component={Post}/>
-                <Tab.Screen name="Users" component={Users}/>
-
-            </Tab.Navigator>
+          <Tab.Navigator>
+          <Tab.Screen
+            name="Home"
+            component={MenuHome}
+            options={{
+              tabBarIcon: () => <AntDesign name="home" size={24} color="black" />
+            }}
+          />
+          <Tab.Screen
+            name="Post"
+            component={Post}
+            options={{
+              tabBarIcon: () => <Entypo name="new-message" size={24} color="black" />
+            }}
+          />
+          <Tab.Screen
+            name="Users"
+            component={Users}
+            options={{
+              tabBarIcon: () => <AntDesign name="search1" size={24} color="black" />
+            }}
+          />
+          
+          <Tab.Screen
+            name="Profile"
+            component={Profile}
+            options={{
+              tabBarIcon: () => <Ionicons name="person" size={24} color="black" />
+            }}
+          />
+        </Tab.Navigator>
     )}
 }
+
 
 export default HomeMenu;
