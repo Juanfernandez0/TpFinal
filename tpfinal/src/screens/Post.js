@@ -9,39 +9,56 @@ class Post extends Component {
         this.state = {
             email: '',
             texto: '',
+            usuario: ''
 
 
         };
     }
 
-    Posteo(email, texto) {
+    Posteo(email,usuario, texto) {
         db.collection('posts').add({
             email: email,
+            usuario: usuario,
             texto: texto,
             likes: [],
             createdAt: Date.now(),
         })
         .then(() => {
+            this.props.navigation.navigate('HomeMenu')
             console.log('Post successfully created!');
         })
         .catch(e => console.log(e));
     }
 
+    deletePost= (id) => {
+        db.collection("posts")
+            .doc(id)
+            .delete()
+            .then(() => {
+                console.log("Post eliminado");
+            })
+            .catch((error) => {
+                console.error("Error eliminando el post:", error);
+            });
+    };
 
-    render() { 
+    render() { console.log(auth.currentUser);
+    
     
         return (               
 
             <View style={styles.form}>
-                <Text>Nuevo Posteo</Text>
+                <Text style={styles.title}>Nuevo Posteo</Text>
                 <TextInput style={styles.field}
                     keyboardType='default'
-                    placeholder='Escribi lo que estas pensando'
+                    placeholder='Escribi lo que estas pensando...'
                     onChangeText={text => this.setState({ texto: text })}
                     value={this.state.texto} />
-                <TouchableOpacity onPress={() => this.Posteo(auth.currentUser.email, this.state.texto)} style={styles.Boton}>
+                <TouchableOpacity onPress={() => this.Posteo(auth.currentUser.email, auth.currentUser.usuario, this.state.texto)} style={styles.Boton}>
                     <Text style={styles.BotonDePosteo}>POSTEAR</Text>
+
                 </TouchableOpacity>
+
             </View>
         )
     }
@@ -55,6 +72,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 20,
       backgroundColor: '#f9f9f9',
+    },
+    title:{
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom:30
     },
     field: {
       width: '100%',

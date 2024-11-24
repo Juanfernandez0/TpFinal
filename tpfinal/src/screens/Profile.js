@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { auth, db } from "../firebase/config";
-import firebase from "firebase/app"; 
+import firebase from "firebase/app";
 import "firebase/firestore";
 
 export class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      posts: [], 
-      loading: true, 
+      posts: [],
+      loading: true,
     };
   }
 
@@ -33,14 +33,43 @@ export class Profile extends Component {
       });
   }
 
+  deletePost = (id) => {
+    db.collection("posts")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Post eliminado");
+      })
+      .catch((error) => {
+        console.error("Error eliminando el post:", error);
+      });
+  };
+
+  logout = () => {
+    auth.signOut()
+      .then(() => {
+        console.log("Usuario deslogueado exitosamente");
+        this.props.navigation.navigate("Login"); // Redirige a la pantalla de login
+      })
+      .catch((error) => {
+        console.error("Error al desloguear:", error);
+      });
+  };
+
   render() {
+    console.log(auth.currentUser);
+
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>Mi Perfil</Text>
-        <Text>Nombre de usuario: {auth.currentUser.usuario }</Text>
-        <Text>Email: {auth.currentUser.email}</Text>
-        <Text>Total de posteos: {this.state.posts.length}</Text>
-
+        <TouchableOpacity
+          onPress={this.logout}
+          style={styles.logoutButton}>
+          <Text style={styles.logoutButtonText}>Cerrar Sesión</Text>
+        </TouchableOpacity>
+        <Text style={styles.textonombres}>Email: {auth.currentUser.email}</Text>
+        <Text style={styles.textonombres}>Total de posteos: {this.state.posts.length}</Text>
+       
         {this.state.loading ? (
           <ActivityIndicator size="large" color="blue" />
         ) : (
@@ -53,7 +82,14 @@ export class Profile extends Component {
                 <Text style={styles.postSubtitle}>
                   Creado el: {new Date(item.createdAt).toLocaleString()}
                 </Text>
-                <Text style={styles.postDescription}>Autor: {item.email}</Text>
+                <Text style={styles.postDescription}>Email del Autor: {item.email}</Text>
+                <Text style={styles.postDescription}>Nombre del Autor: {item.usuario}</Text>
+                <TouchableOpacity
+                  onPress={() => this.deletePost(item.id)}
+                  style={styles.deleteButton}
+                >
+                  <Text style={styles.deleteButtonText}>Eliminar</Text>
+                </TouchableOpacity>
               </View>
             )}
             ListEmptyComponent={<Text>No tienes posteos aún.</Text>}
@@ -73,8 +109,12 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
     textAlign: "center",
+  },
+  textonombres:{
+    fontSize: 16,
+    fontWeight: "bold",
+    padding: 10
   },
   post: {
     marginBottom: 15,
@@ -98,6 +138,29 @@ const styles = StyleSheet.create({
   postDescription: {
     fontSize: 14,
     marginTop: 5,
+  },
+  deleteButton: {
+    marginTop: 10,
+    backgroundColor: "#ff5252",
+    padding: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  logoutButton: {
+    marginTop: 20,
+    backgroundColor: "#3a1fe4",
+    padding: 15,
+    borderRadius: 5,
+  },
+  logoutButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 16,
   },
 });
 
